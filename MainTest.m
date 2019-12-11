@@ -2,7 +2,7 @@
 
 clear;
 %%%%%%%%%%%%%%%%%%%%%Datos para simular%%%%%%%%%%%%%%%%%%%%%%%
-
+addpath('lib/');
 
 %Receptor%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Receptor.Tsimulacion = 5; %[s]
@@ -36,8 +36,8 @@ rng('default');
 rng(1);
 % Reflectores1 = reflectores(1000,100,[-5000,12000,914], 2000,-18,3); %%Aproximo a una nuve con distribucion gaussiana en la velocidad, para la DEP
 % Reflectores2 = reflectores(2000,160000,[5000,10000,1100], 700,0,0); 
-Reflectores3 = reflectores(1000,1000,[5000,10000,1100], 2000,12.5,3); 
-Reflectores4 = reflectores(1000,2000,[0,10000,1100], 1000,25,3);
+Reflectores3 = reflectores(2000,1000,[5000,10000,1100], 2000,12.5,3); 
+Reflectores4 = reflectores(2000,2000,[0,10000,1100], 1000,-12.5,3);
 % Reflectores5 = reflectores(1000,100,[0,-10000,1100], 2000,0,0);
 
 % figure; scatter3(Reflectores2.positionX, Reflectores2.positionY, Reflectores2.positionZ);
@@ -65,11 +65,12 @@ tr = Receptor.te + 1/Receptor.fs .*(1:Nrango) ;
 r_v = tr*Receptor.c/2; %discretizacion del rango de la ventana (una sola ventana)
 
 %salvamos todo en el archivo simulacion.mat
+
 if Receptor.modalidad == "S"
     save('simulacionS.mat')
 elseif Receptor.modalidad == "U"
+    PRF = 1/Receptor.Tu;
     save('simulacionU.mat')
 end
 
-PRF = 1/Receptor.Tu;
-save('DatosIQ.mat', 'DataIQreshape', 'PRF');
+
