@@ -5,7 +5,7 @@ clear;
 addpath('lib/');
 
 %Receptor%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Receptor.Tsimulacion = 5; %[s]
+Receptor.Tsimulacion = 4; %[s]
 Receptor.tr = 100e-6 ; % tamano de la ventana de recepcion
 Receptor.T = 5e-6 ; % tamano del pulso transmitido 
 Receptor.c = 3e8; % velocidad de la luz en el vacio
@@ -35,14 +35,14 @@ Antena.NoiseLevel = 10^-8 ;
 rng('default');
 rng(1);
 % Reflectores1 = reflectores(1000,100,[-5000,12000,914], 2000,-18,3); %%Aproximo a una nuve con distribucion gaussiana en la velocidad, para la DEP
-% Reflectores2 = reflectores(2000,160000,[5000,10000,1100], 700,0,0); 
-Reflectores3 = reflectores(2000,1000,[5000,10000,1100], 2000,12.5,3); 
-Reflectores4 = reflectores(2000,2000,[0,10000,1100], 1000,-12.5,3);
+Reflectores2 = reflectores(2000,20000,[5000,10000,1100], 700,0,0); 
+Reflectores3 = reflectores(2000,1000,[5000,10000,1100], 2000,-12.5,3); 
+Reflectores4 = reflectores(2000,2000,[0,10000,1100], 1000,12.5,3);
 % Reflectores5 = reflectores(1000,100,[0,-10000,1100], 2000,0,0);
 
 % figure; scatter3(Reflectores2.positionX, Reflectores2.positionY, Reflectores2.positionZ);
 %Uno todos los reflectores
- Reflectores = UneReflectores([ Reflectores3, Reflectores4  ]); 
+ Reflectores = UneReflectores([ Reflectores2, Reflectores3, Reflectores4  ]); 
 % Reflectores = UneReflectores(Reflectores1 ); 
 clear Reflectores1 Reflectores2 Reflectores3 Reflectores4 Reflectores5 ;
 
