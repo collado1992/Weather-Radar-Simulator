@@ -21,6 +21,7 @@ elseif strcmp(Receptor.modalidad,"U")
     Antena.w = Antena.ang3dBacimut/(Receptor.M*Receptor.Tu) ; %velovidad angular
 end
 
+clutter_t = Antena.w * Antena.lambda * sqrt(log(2))/(2*pi*Antena.ang3dBacimut);
 
 Nrango = round(Receptor.tr*Receptor.fs);
 tr = Receptor.te + 1/Receptor.fs .*(1:Nrango) ;
