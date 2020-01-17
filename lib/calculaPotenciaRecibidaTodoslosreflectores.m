@@ -32,7 +32,7 @@ end
     delta_tita = min(abs(Antena.angTita-tita), 2*pi-abs(Antena.angTita-tita) );
     delta_phi =  abs(Antena.angElevacion - phi);
     
-    aux = delta_tita < 3*pi/180 & delta_phi< 3*pi/180; 
+    aux = delta_tita < 4*pi/180 & delta_phi< 4*pi/180; 
     
         
     Etita = sin(pi*(Antena.D/Antena.lambda).*sin(delta_tita))./(pi*(Antena.D/Antena.lambda).*sin(delta_tita)).*aux ;

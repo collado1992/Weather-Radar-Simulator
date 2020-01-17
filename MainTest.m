@@ -2,10 +2,10 @@
 
 clear;
 %%%%%%%%%%%%%%%%%%%%%Datos para simular%%%%%%%%%%%%%%%%%%%%%%%
-
+addpath('lib/');
 
 %Receptor%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Receptor.Tsimulacion = 5; %[s]
+Receptor.Tsimulacion = 7; %[s]
 Receptor.tr = 100e-6 ; % tamano de la ventana de recepcion
 Receptor.T = 5e-6 ; % tamano del pulso transmitido 
 Receptor.c = 3e8; % velocidad de la luz en el vacio
@@ -16,7 +16,7 @@ Receptor.T2 = 1.2e-3; %[s] para el caso staggered 3T1 = 2T2
 Receptor.fs = 50e6; %frecuencia de muestreo
 Receptor.Fc = 5.6e9 ; % [Hz] frecuencia portadora
 Receptor.M = 64; %Numero de muestras en acimut dentro de los 3dB de la antena
-Receptor.modalidad = "U"; %S de staggered, U de uniforme
+Receptor.modalidad = "S"; %S de staggered, U de uniforme
 %Antena%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Antena.x = 0;
 Antena.y = 0;
@@ -34,15 +34,15 @@ Antena.NoiseLevel = 10^-8 ;
 %%%%%%%%Creo los reflectores%%%%%%%%%%%%%%
 rng('default');
 rng(1);
-% Reflectores1 = reflectores(1000,100,[-5000,12000,914], 2000,-18,3); %%Aproximo a una nuve con distribucion gaussiana en la velocidad, para la DEP
-% Reflectores2 = reflectores(2000,160000,[5000,10000,1100], 700,0,0); 
-Reflectores3 = reflectores(1000,1000,[5000,10000,1100], 2000,12.5,3); 
-Reflectores4 = reflectores(1000,2000,[0,10000,1100], 1000,25,3);
-% Reflectores5 = reflectores(1000,100,[0,-10000,1100], 2000,0,0);
+% Reflectores1 = reflectores(2000,160000,[-5000,10000,1100], 1000,0,0); %%Aproximo a una nuve con distribucion gaussiana en la velocidad, para la DEP
+Reflectores2 = reflectores(2000,100000,[5000,10000,1100], 700,0,0);
+Reflectores3 = reflectores(2000,1000,[5000,10000,1100], 2000,-40,3);
+Reflectores4 = reflectores(2000,1000,[0,10000,1100], 1000,35,2);
+% Reflectores5 = reflectores(2000,1000,[-5000,10000,1100], 1500,-10,4);
 
 % figure; scatter3(Reflectores2.positionX, Reflectores2.positionY, Reflectores2.positionZ);
 %Uno todos los reflectores
- Reflectores = UneReflectores([ Reflectores3, Reflectores4  ]); 
+ Reflectores = UneReflectores([Reflectores2, Reflectores3, Reflectores4 ]); 
 % Reflectores = UneReflectores(Reflectores1 ); 
 clear Reflectores1 Reflectores2 Reflectores3 Reflectores4 Reflectores5 ;
 
@@ -65,11 +65,12 @@ tr = Receptor.te + 1/Receptor.fs .*(1:Nrango) ;
 r_v = tr*Receptor.c/2; %discretizacion del rango de la ventana (una sola ventana)
 
 %salvamos todo en el archivo simulacion.mat
+
 if Receptor.modalidad == "S"
     save('simulacionS.mat')
 elseif Receptor.modalidad == "U"
+    PRF = 1/Receptor.Tu;
     save('simulacionU.mat')
 end
 
-PRF = 1/Receptor.Tu;
-save('DatosIQ.mat', 'DataIQreshape', 'PRF');
+disp('termino la simulacion');

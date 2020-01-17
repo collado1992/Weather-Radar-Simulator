@@ -7,13 +7,13 @@ clear;
 %para ubuntu
 % addpath('/home/euler/MEGAsync/Doctorado/Códigos MATLAB/Simulador RADARM/Simulador_Radar_Meteorológico/ProcesamientoUniforme')
 % addpath('/home/euler/MEGAsync/Doctorado/Códigos MATLAB/Simulador RADARM/Simulador_Radar_Meteorológico/ProcesamientoStaggered/GMAP-S')
-
-
+addpath('/home/euler/Desktop/RepositoriosGitLab/gmap_td_cpp/nonuniformsampling/GMAP-TDsataggered y GMAP-Staggered')
+addpath('/home/euler/Desktop/RepositoriosGitLab/gmap_td_cpp/nonuniformsampling/GMAP-TDsataggered y GMAP-Staggered/ProcesamientodeDatosreales/GMAPTDuniforme')
 %para ubuntu casa
-addpath('/home/euler/Desktop/simuladorRadar/Simulador_Radar_Meteorológico/ProcesamientoUniforme')
-addpath('/home/euler/Desktop/simuladorRadar/Simulador_Radar_Meteorológico/ProcesamientoStaggered/GMAP-S')
+% addpath('/home/euler/Desktop/simuladorRadar/Simulador_Radar_Meteorológico/ProcesamientoUniforme')
+% addpath('/home/euler/Desktop/simuladorRadar/Simulador_Radar_Meteorológico/ProcesamientoStaggered/GMAP-S')
 
-load('simulacionU.mat')
+load('simulacionS.mat')
 
 %Calculo la velocidad angular del radar.
 if strcmp(Receptor.modalidad,"S")
@@ -104,7 +104,7 @@ for i=1:size(DataIQreshape,3)
 %         end
         
         [P(j,i),vm(j,i),sigma(j,i)] = PPPStaggered(Ry,0,Receptor.T1, Receptor.T2 ,Antena.lambda);
-        [SpE(j,i), vpE(j,i), sigmapE(j,i), NL(j,i), salida(j,i)] = GMAP_Staggered1(DataIQreshape(:,j,i).',Antena.lambda,Receptor.T1, Receptor.T2,sigma_c_f,numSampUnif,indSampNonUnif,[2 3], 'kaiser',8);
+        [SpE(j,i), vpE(j,i), sigmapE(j,i), NL(j,i), salida(j,i)] = GMAP_Staggered(DataIQreshape(:,j,i).',Antena.lambda,Receptor.T1, Receptor.T2,sigma_c_f,numSampUnif,indSampNonUnif,[2 3], 'kaiser',8);
     end
 end
 close(wai);
