@@ -1,4 +1,4 @@
- function posiciones = actualizaReflectores(T, Reflectores, tita, phi)
+ function Reflectores = actualizaReflectores(T, Reflectores, tita, phi)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 05/06/2019
 tita = tita(:);
 phi = phi(:);
@@ -8,6 +8,6 @@ phi = phi(:);
 % posiciones.y = Reflectores.positionY + (Reflectores.velocidad + deltaVelocidad ) .*sin(phi).*sin(tita)*T ;
 % posiciones.z = Reflectores.positionZ + (Reflectores.velocidad + deltaVelocidad ) .*cos(tita)*T  ;
 
-posiciones.x = Reflectores.positionX + (Reflectores.velocidad  ) .*sin(phi).*cos(tita)*T ;
-posiciones.y = Reflectores.positionY + (Reflectores.velocidad  ) .*sin(phi).*sin(tita)*T ;
-posiciones.z = Reflectores.positionZ + (Reflectores.velocidad  ) .*cos(tita)*T  ;
+Reflectores.positionX = Reflectores.positionX + (Reflectores.velocidad  ) .*sin(phi).*cos(tita)*T ;
+Reflectores.positionY = Reflectores.positionY + (Reflectores.velocidad  ) .*sin(phi).*sin(tita)*T ;
+Reflectores.positionZ = Reflectores.positionZ + (Reflectores.velocidad  ) .*cos(tita)*T  ;

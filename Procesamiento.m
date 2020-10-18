@@ -1,18 +1,10 @@
 %Scrip para procesar los datos simulados, modo uniforme o staggered
 
 clear;
-%para windows
-% addpath('D:\MegaSync\Doctorado\C�digos MATLAB\Simulador RADARM\Simulador_Radar_Meteorol�gico\ProcesamientoStaggered\GMAP-S');
-% addpath('D:\MegaSync\Doctorado\C�digos MATLAB\Simulador RADARM\Simulador_Radar_Meteorol�gico\ProcesamientoUniforme');
-%para ubuntu
-% addpath('/home/euler/MEGAsync/Doctorado/Códigos MATLAB/Simulador RADARM/Simulador_Radar_Meteorológico/ProcesamientoUniforme')
-% addpath('/home/euler/MEGAsync/Doctorado/Códigos MATLAB/Simulador RADARM/Simulador_Radar_Meteorológico/ProcesamientoStaggered/GMAP-S')
-addpath('/home/euler/Desktop/RepositoriosGitLab/gmap_td_cpp/nonuniformsampling/GMAP-TDsataggered y GMAP-Staggered')
-addpath('/home/euler/Desktop/RepositoriosGitLab/gmap_td_cpp/nonuniformsampling/GMAP-TDsataggered y GMAP-Staggered/ProcesamientodeDatosreales/GMAPTDuniforme')
-%para ubuntu casa
-% addpath('/home/euler/Desktop/simuladorRadar/Simulador_Radar_Meteorológico/ProcesamientoUniforme')
-% addpath('/home/euler/Desktop/simuladorRadar/Simulador_Radar_Meteorológico/ProcesamientoStaggered/GMAP-S')
-
+addpath('/home/euler/Desktop/GIT/ASPASSyGMAP-TD/GMAP_S');
+addpath('/home/euler/Desktop/GIT/ASPASSyGMAP-TD/libreria');
+addpath('/home/euler/Desktop/GIT/espectralmomentestimation/StandardMethods');
+addpath('/home/euler/Desktop/GIT/GMAP/');
 load('simulacionS.mat')
 
 %Calculo la velocidad angular del radar.
@@ -41,7 +33,7 @@ for i=1:size(DataIQreshape,3)
 %             
 %         end
         
-        [PGMAP(j,i),vmGMAP(j,i),sigmaGMAP(j,i),NLGMAP(j,i), CSR_EstimadoGMAP(j,i), salidaGMAP(j,i)] = GMAP(DataIQreshape(:,j,i).',1/Receptor.Tu,Antena.lambda, sigma_c_f,0,0, 'blackman');
+        [PGMAP(j,i),vmGMAP(j,i),sigmaGMAP(j,i), CSR_EstimadoGMAP(j,i)] = GMAP(DataIQreshape(:,j,i).',1/Receptor.Tu,Antena.lambda, sigma_c_f,0,0, 'Blackman');
    end
 end
 close(wai);
