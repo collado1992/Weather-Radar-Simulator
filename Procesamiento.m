@@ -7,6 +7,7 @@ addpath('/home/euler/Desktop/GIT/espectralmomentestimation/StandardMethods');
 addpath('/home/euler/Desktop/GIT/GMAP/');
 load('simulacionS.mat')
 
+% Receptor.modalidad = 'S'
 %Calculo la velocidad angular del radar.
 if strcmp(Receptor.modalidad,"S")
     Antena.w = Antena.ang3dBacimut/(Receptor.M/2*(Receptor.T1 + Receptor.T2) ) ; %velovidad angular
@@ -23,6 +24,7 @@ if strcmp(Receptor.modalidad,"U")
 %%Procesamiento uniforme
 va = Antena.lambda/4/Receptor.Tu;
 vindex = linspace(-va,va,Receptor.M);
+% [PGMAP(j,i),vmGMAP(j,i),sigmaGMAP(j,i), CSR_EstimadoGMAP(j,i)] = GMAP(DataIQreshape(:,3200,90).',1/Receptor.Tu,Antena.lambda, sigma_c_f,0,0, 'Blackman');
  wai = waitbar(0,'Comienza el procesamiento doppler uniforme');
 for i=1:size(DataIQreshape,3)
    waitbar(i/size(DataIQreshape,3),wai);
@@ -75,6 +77,7 @@ title('ancho espectral fenomeno GMAP');
 elseif strcmp(Receptor.modalidad,"S")
   %Procesamiento staggered  
 intStagg = [2 3];
+% Receptor.M = 64; %%%Borrar esto despues
 numSampUnif = round((Receptor.M - 1)*sum(intStagg)/numel(intStagg)) + 1;
 % indices de las muestras cada Tu
 indSampUnif = 0:(numSampUnif - 1);
@@ -85,18 +88,20 @@ indSampNonUnif = indSampNonUnif(1:Receptor.M);
     
 va = Antena.lambda/4/(Receptor.T2-Receptor.T1);
 vindex = linspace(-va,va,64);
+% [SpE(j,i), vpE(j,i), sigmapE(j,i), NL(j,i), salida(j,i)] = ASPASS1(DataIQreshape(:,3372,63).',Antena.lambda,Receptor.T1, Receptor.T2,sigma_c_f,numSampUnif,indSampNonUnif,[2 3], 'kaiser',8);
  wai = waitbar(0,'Comienza el procesamiento doppler staggered');
+ 
 for i=1:size(DataIQreshape,3)
    waitbar(i/size(DataIQreshape,3),wai);
     for j=1:size(DataIQreshape,2)
         Ry = DataIQreshape(:,j,i) * DataIQreshape(:,j,i)'; 
         
-%         if j==3474 && i ==63
+%         if j==3600 && i ==62
 %             
 %         end
         
         [P(j,i),vm(j,i),sigma(j,i)] = PPPStaggered(Ry,0,Receptor.T1, Receptor.T2 ,Antena.lambda);
-        [SpE(j,i), vpE(j,i), sigmapE(j,i), NL(j,i), salida(j,i)] = GMAP_Staggered(DataIQreshape(:,j,i).',Antena.lambda,Receptor.T1, Receptor.T2,sigma_c_f,numSampUnif,indSampNonUnif,[2 3], 'kaiser',8);
+        [SpE(j,i), vpE(j,i), sigmapE(j,i), NL(j,i), salida(j,i), CNR(i,j), Nclutter(i,j)] = ASPASS1(DataIQreshape(:,j,i).',Antena.lambda,Receptor.T1, Receptor.T2,sigma_c_f,numSampUnif,indSampNonUnif,[2 3], 'kaiser',8);
     end
 end
 close(wai);

@@ -83,7 +83,7 @@ elseif  strcmp(Receptor.modalidad,"S")
         
         %Actualizo la posicion de la antena y la de los reflectores
         if mod(Nx,2)== 1
-            position = actualizaReflectores(Receptor.T1,Reflectores, tita, phi); %Posicion reflectores actualizada
+            Reflectores = actualizaReflectores(Receptor.T1,Reflectores, tita, phi); %Posicion reflectores actualizada
             Antena.angTita = mod(Antena.angTita + Antena.w*Receptor.T1,2*pi); % angulo acimutal de la antena actualizado
         else
             Reflectores = actualizaReflectores(Receptor.T2,Reflectores, tita, phi); %Posicion reflectores actualizada
